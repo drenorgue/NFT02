@@ -5,10 +5,11 @@
 #include "NFTCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Projectile.h"
+#include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/EngineTypes.h"
 #include "Components/SceneComponent.h"
-#include "Blueprint/UserWidget.h"
+//#include "Blueprint/UserWidget.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -19,7 +20,6 @@ AWeapon::AWeapon()
 	MeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComp"));
 	RootComponent = MeshComp;
 
-
 }
 
 // Called when the game starts or when spawned
@@ -27,7 +27,7 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, EAttachmentRule::SnapToTarget, false);
+//	FAttachmentTransformRules rules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, EAttachmentRule::SnapToTarget, false);
 
 	//MeshComp->AttachTo(RootComponent);
  //   UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetMesh()->GetSocketByName(FName("pelvis")); // FONCTIONNE
@@ -51,11 +51,12 @@ void AWeapon::Fire()
 	{
 		FVector EyeLocation;
 		FRotator EyeRotation;
-		//MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 		EyeLocation = RootComponent->GetComponentLocation();
+		
+	//	EyeRotation.Add(0.0f, 0.0f, 100.0f); // met le personnage à l'envers
 
-		
-		
+			
 		FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * 10000); // 10 000 car il fallait un grand nombre
 
 		FCollisionQueryParams QueryParms;
@@ -73,9 +74,20 @@ void AWeapon::Fire()
 		}*/
 
 	//	DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Red, false, 1.0f, 0, 1.0f);
-		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, EyeLocation, EyeRotation);
-	
+		FVector a = EyeLocation + (10.0f, 10.0f, 10.0f)  ; // pour pas spawn dans le corp du Mesh
 		
+		FActorSpawnParameters e ;
+		FRotator b;
+		b = EyeRotation;
+		b.Add(1.0f, 5.0f, 0.0f);
+
+
+
+
+	//	AActor* SpawnedActor = GetWorld()->SpawnActor<AProjectile>(a, EyeRotation);
+	//	SpawnedActor->SpawnCollisionHandlingMethod = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, b, e);
+	
 		
 		for (TObjectIterator<ANFTCharacter> Itr; Itr; ++Itr)
 		{
@@ -85,15 +97,10 @@ void AWeapon::Fire()
 				actorClass->Rotation(EyeRotation);
 			}
 		}
-		
-
-
 	}
 }
 
 void AWeapon::OnClick()
 {
-	
-
 }
 
