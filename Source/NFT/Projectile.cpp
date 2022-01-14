@@ -5,6 +5,9 @@
 
 #include "Components/SphereComponent.h"
 #include "GameFrameWork/ProjectileMovementComponent.h"
+#include "Enemy02.h"
+#include "Kismet/GameplayStatics.h"
+#include "Framework/Application/SlateApplication.h"
 
 //#include "Enemy.h"
 
@@ -15,12 +18,20 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collision"));
-	CollisionSphere->InitSphereRadius(20.0f);
+	CollisionSphere->InitSphereRadius(80.0f);
 	CollisionSphere->SetSimulatePhysics(true);
 	CollisionSphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	RootComponent = CollisionSphere;
 /*	a->SetSimulatePhysics(true);
 	a->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);*/
+
+	TCHAR* SoundPath = L"Content'/LEJEU/Asset/Sound/Arrow/Hit/arrow-sound-effect.uasset'";
+	auto AmmoPickupSoundAsset = ConstructorHelpers::FObjectFinder<USoundBase>(SoundPath);
+	if (AmmoPickupSoundAsset.Object != nullptr)
+	{
+		ArrowHit = AmmoPickupSoundAsset.Object;
+	}
+	
  
 
 	ProjectileMovement =
@@ -50,7 +61,12 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 /*	OnCompo.AddDynamic(this, &AProjectile::touch);
-	CollisionSphere->*/
+	CollisionSphere->*
+	
+	*/
+	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnHit);
+	CollisionSphere->OnComponentHit.AddDynamic(this, &AProjectile::OnCompHit);
+
 	
 }
 
@@ -63,12 +79,26 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
+	AEnemy02* Char = Cast<AEnemy02>(OtherActor);
+	if (Char)
+	{
+		Char->DealDamage(DamageValue);
+		UGameplayStatics::PlaySoundAtLocation(this, ArrowHit, GetActorLocation(), 2.0f);
+		Destroy();
 
+	}
+
+	
 }
 
 void AProjectile::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	Destroy();
+	AEnemy02* Char = Cast<AEnemy02>(OtherActor);
+	if (Char)
+	{
+		Char->DealDamage(DamageValue);
+	}
+	
 }
 
 void AProjectile::OnOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult& SweepResult)

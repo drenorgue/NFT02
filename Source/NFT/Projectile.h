@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -42,6 +44,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class AProjectile> ProjectileClass;
+
+	UPROPERTY()
+		class USoundBase* ArrowHit;
 
 private:
 

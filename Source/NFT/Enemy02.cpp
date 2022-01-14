@@ -3,6 +3,10 @@
 
 #include "Enemy02.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/BoxComponent.h"
+#include "NFTCharacter.h"
+#include "Projectile.h"
+#include "Engine/GameEngine.h"
 
 
 // Sets default values
@@ -12,25 +16,20 @@ AEnemy02::AEnemy02()
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
 
-	HitBox = CreateDefaultSubobject<UCapsuleComponent>(TEXT("HitBox"));
-
-	HitBox->SetSimulatePhysics(true);
-	HitBox->SetNotifyRigidBodyCollision(true);
-
-	HitBox->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
+	DamageCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Damage Collision"));
+	DamageCollision->SetupAttachment(RootComponent);
+	
 
 	
 }
 
-void AEnemy02::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-}
 
 // Called when the game starts or when spawned
 void AEnemy02::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	DamageCollision->OnComponentBeginOverlap.AddDynamic(this, &AEnemy02::OnHit);
 }
 
 // Called every frame
@@ -45,5 +44,24 @@ void AEnemy02::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AEnemy02::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+	bool bFromSweep, const FHitResult& Hit)
+{
+		
+}
+
+void AEnemy02::DealDamage(float DamageValue)
+{
+	health = health - 70.0f;
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Damage"));
+
+	if (health <= 0)
+	{
+		Destroy();
+	}
+		
 }
 

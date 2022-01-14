@@ -16,15 +16,6 @@ class NFT_API AEnemy02 : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AEnemy02();
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class UCapsuleComponent* HitBox;
-
-	UFUNCTION()
-		void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
-
-
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,5 +27,21 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditAnywhere)
+		class UBoxComponent* DamageCollision;
+
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
+			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+			bool bFromSweep, const FHitResult& Hit);
+
+	UFUNCTION()
+		void DealDamage(float DamageValue);
+
+private:
+	UPROPERTY()
+		float health = 100.0f;
+
 
 };

@@ -79,14 +79,14 @@ void AWeapon::Fire()
 		FActorSpawnParameters e ;
 		FRotator b;
 		b = EyeRotation;
-		b.Add(1.0f, 5.0f, 0.0f);
+		b.Add(1.0f, 5.0f, 0.0f); // éssaye de patch les balles
 
 
 
 
 	//	AActor* SpawnedActor = GetWorld()->SpawnActor<AProjectile>(a, EyeRotation);
 	//	SpawnedActor->SpawnCollisionHandlingMethod = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, b, e);
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, b, e); // fait spawn la balle
 	
 		
 		for (TObjectIterator<ANFTCharacter> Itr; Itr; ++Itr)
@@ -94,7 +94,7 @@ void AWeapon::Fire()
 			if (Itr->IsA(ANFTCharacter::StaticClass()))
 			{
 				ANFTCharacter* actorClass = *Itr;
-				actorClass->Rotation(EyeRotation);
+				actorClass->Rotation(EyeRotation); // change la rotation du personnage a chaque tire
 			}
 		}
 	}
