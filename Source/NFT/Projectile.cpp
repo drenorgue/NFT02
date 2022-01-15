@@ -62,6 +62,11 @@ void AProjectile::BeginPlay()
 	*/
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnHit);
 	CollisionSphere->OnComponentHit.AddDynamic(this, &AProjectile::OnCompHit);
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+		{
+			Destroy();
+		}, 5, false);
 
 }
 
@@ -114,4 +119,6 @@ void AProjectile::touch()
 {
 	Destroy();
 }
+
+
 

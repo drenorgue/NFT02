@@ -95,6 +95,8 @@ public:
 	UFUNCTION()
 		void ThirdPerson();
 
+	UPROPERTY()
+		bool FirtsPersonBool;
 
 
 };

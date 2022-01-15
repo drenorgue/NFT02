@@ -8,6 +8,8 @@
 #include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/GameEngine.h"
+#include "NFTCharacter.h"
 #include "Components/SceneComponent.h"
 //#include "Blueprint/UserWidget.h"
 
@@ -81,6 +83,12 @@ void AWeapon::Fire()
 		b = EyeRotation;
 		b.Add(1.0f, 5.0f, 0.0f); // éssaye de patch les balles
 
+		for (TObjectIterator<ANFTCharacter> It; It; ++It)
+		{
+			It->FirtsPersonBool;
+			
+		}
+
 
 
 
@@ -102,5 +110,49 @@ void AWeapon::Fire()
 
 void AWeapon::OnClick()
 {
+}
+
+void AWeapon::Fire02(FRotator ab)
+{
+	AActor* MyOwner = GetOwner(); // récupère qui tire
+	if (MyOwner) // verifie qui tire (pour un eventuelle multijoueur)
+	{
+		FVector EyeLocation;
+		FRotator EyeRotation;
+		EyeLocation = RootComponent->GetComponentLocation();
+
+		//	EyeRotation.Add(0.0f, 0.0f, 100.0f); // met le personnage à l'envers
+
+
+		FVector TraceEnd = EyeLocation + (ab.Vector() * 10000); // 10 000 car il fallait un grand nombre
+
+		FCollisionQueryParams QueryParms;
+		QueryParms.AddIgnoredActor(MyOwner); // ignore le joueur qui a tiré
+		QueryParms.AddIgnoredActor(this); // ignore l'arme
+		QueryParms.bTraceComplex = true; // pour savoir exactement où on touche
+
+
+		FHitResult Hit;
+		FVector a = EyeLocation + (10.0f, 10.0f, 10.0f); // pour pas spawn dans le corp du Mesh
+
+		FActorSpawnParameters e;
+		FRotator b;
+		b = EyeRotation;
+		b.Add(1.0f, 5.0f, 0.0f); // éssaye de patch les balles
+		ab.Add (0.0f, 0.0f, 0.0f);
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, ab, e); // fait spawn la balle
+
+		for (TObjectIterator<ANFTCharacter> Itr; Itr; ++Itr)
+		{
+			if (Itr->IsA(ANFTCharacter::StaticClass()))
+			{
+				ANFTCharacter* actorClass = *Itr;
+				actorClass->Rotation(ab); // change la rotation du personnage a chaque tire
+			}
+		}
+
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("HALLO"));
+	}
+
 }
 

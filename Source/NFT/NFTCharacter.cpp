@@ -11,6 +11,7 @@
 #include "Components/SphereComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Weapon.h"
+#include "Engine/GameEngine.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ANFTCharacter
@@ -57,12 +58,6 @@ ANFTCharacter::ANFTCharacter()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProjectile"));
 	Sphere->SetupAttachment(FollowCamera);
-
-
-
-
-
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -113,17 +108,23 @@ void ANFTCharacter::Rotation(FRotator NewRotation)
 	SetActorRotation(NewRotation);
 }
 
-void ANFTCharacter::FirtsPerson()
+void ANFTCharacter::FirtsPerson() // met a la 3ème Personne
 {
 	Cam02->SetActive(false);
 	FollowCamera->SetActive(true);
+
+	FirtsPersonBool = true;
+
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("ThirdPerson"));
 }
 
 
-void ANFTCharacter::ThirdPerson()
+void ANFTCharacter::ThirdPerson() // met a la 1 ère personne 
 {
 	Cam02->SetActive(true);
 	FollowCamera->SetActive(false);
+
+	FirtsPersonBool = false;
 }
 
 
@@ -140,14 +141,34 @@ void ANFTCharacter::OnBeginPlay()
 
 void ANFTCharacter::OnClick()
 {
-	for (TObjectIterator<AWeapon> Itr; Itr; ++Itr) // apelle la fonction Fire() de Weapon.cpp
+	if (FirtsPersonBool == true)
 	{
-		if (Itr->IsA(AWeapon::StaticClass()))
+		for (TObjectIterator<AWeapon> Itr; Itr; ++Itr) // apelle la fonction Fire() de Weapon.cpp
 		{
-			AWeapon* actorClass = *Itr;
-			actorClass->Fire();
+			if (Itr->IsA(AWeapon::StaticClass()))
+			{
+				AWeapon* actorClass = *Itr;
+				actorClass->Fire();
+			}
 		}
 	}
+
+	if (FirtsPersonBool == false) 
+	{
+		for (TObjectIterator<AWeapon> Itr; Itr; ++Itr) // apelle la fonction Fire() de Weapon.cpp
+		{
+			if (Itr->IsA(AWeapon::StaticClass()))
+			{
+				AWeapon* actorClass = *Itr;
+
+				FRotator relat = Cam02->GetRelativeRotation();
+
+				actorClass->Fire02(relat);
+			}
+		}
+	}
+
+
 }
 
 void ANFTCharacter::OnResetVR()

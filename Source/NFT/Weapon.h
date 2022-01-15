@@ -38,6 +38,7 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = Projectile)
 		TSubclassOf<class AProjectile> ProjectileClass;
 
-
+	UFUNCTION()
+		void Fire02(FRotator ab);
 
 };
