@@ -48,6 +48,13 @@ public:
 	UPROPERTY()
 		class USoundBase* ArrowHit;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sounding)
+		bool Sound = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Damage)
+		bool CanDamage = true;
+
+
 private:
 
 	UFUNCTION()

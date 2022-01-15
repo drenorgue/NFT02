@@ -84,6 +84,9 @@ public:
 
 	void Rotation(FRotator NewRotation);
 
+	UPROPERTY()
+		class UCameraComponent* Cam02;
+
 private:
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		FVector GunOffset;*/

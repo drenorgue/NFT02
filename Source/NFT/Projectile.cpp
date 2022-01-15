@@ -82,10 +82,20 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	AEnemy02* Char = Cast<AEnemy02>(OtherActor);
 	if (Char)
 	{
-		Char->DealDamage(DamageValue);
-		UGameplayStatics::PlaySoundAtLocation(this, ArrowHit, GetActorLocation(), 2.0f);
-		Destroy();
+		if (CanDamage) // pour qu'un projectile de fasse qu'un degat et pas plusieur (j'aurai du utilisier OnBeginOverlap plutot que OnHit)
+		{
+			CanDamage = false;
+			Char->DealDamage(DamageValue);
+			Sound = true;
+			
+			FTimerHandle TimerHandle;
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+				{
+					CanDamage = true;
+					Destroy();
+				}, 0.1, false);
 
+		}
 	}
 
 	
@@ -97,6 +107,7 @@ void AProjectile::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	if (Char)
 	{
 		Char->DealDamage(DamageValue);
+		Sound = true;
 	}
 	
 }
