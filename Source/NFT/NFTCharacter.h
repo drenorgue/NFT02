@@ -24,11 +24,8 @@ class ANFTCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
 		class USphereComponent* Sphere;
 
-
 public:
 	ANFTCharacter();
-
-
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -84,10 +81,6 @@ public:
 
 	void Rotation(FRotator NewRotation);
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		class UCameraComponent* Cam02;
-
-private:
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		FVector GunOffset;*/
 };

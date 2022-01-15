@@ -57,6 +57,7 @@ ANFTCharacter::ANFTCharacter()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProjectile"));
 	Sphere->SetupAttachment(FollowCamera);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -96,16 +97,12 @@ FVector ANFTCharacter::GetPawnViewLocation() const
 	{
 		return FollowCamera->GetComponentLocation();
 	}
-
-
 	//return Super::GetPawnViewLocation();
 	return FollowCamera->GetComponentLocation();
 }*/
 
 void ANFTCharacter::Rotation(FRotator NewRotation)
 {
-	
-	
 	NewRotation.Pitch = GetActorRotation().Pitch;
 	SetActorRotation(NewRotation);
 }
@@ -113,8 +110,6 @@ void ANFTCharacter::Rotation(FRotator NewRotation)
 
 void ANFTCharacter::OnClick()
 {
-	
-
 	for (TObjectIterator<AWeapon> Itr; Itr; ++Itr) // apelle la fonction Fire() de Weapon.cpp
 	{
 		if (Itr->IsA(AWeapon::StaticClass()))

@@ -42,6 +42,4 @@ public:
 private:
 	UPROPERTY()
 		float health = 100.0f;
-
-
 };

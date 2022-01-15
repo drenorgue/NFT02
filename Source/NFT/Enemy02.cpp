@@ -18,9 +18,6 @@ AEnemy02::AEnemy02()
 
 	DamageCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Damage Collision"));
 	DamageCollision->SetupAttachment(RootComponent);
-	
-
-	
 }
 
 
@@ -62,6 +59,5 @@ void AEnemy02::DealDamage(float DamageValue)
 	{
 		Destroy();
 	}
-		
 }
 

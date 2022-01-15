@@ -49,10 +49,6 @@ AProjectile::AProjectile()
 //	CollisionSphere->OnComponentBeginOverlap.Ad
 //	CollisionSphere->OnComponentBeginOverlap.__Internal_AddDynamic();
 //	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlap);
-	
-
-
-
 
 }
 
@@ -67,7 +63,6 @@ void AProjectile::BeginPlay()
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnHit);
 	CollisionSphere->OnComponentHit.AddDynamic(this, &AProjectile::OnCompHit);
 
-	
 }
 
 // Called every frame
@@ -97,7 +92,6 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 
 		}
 	}
-
 	
 }
 
