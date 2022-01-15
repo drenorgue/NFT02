@@ -25,12 +25,12 @@ AProjectile::AProjectile()
 /*	a->SetSimulatePhysics(true);
 	a->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);*/
 
-	TCHAR* SoundPath = L"Content'/LEJEU/Asset/Sound/Arrow/Hit/arrow-sound-effect.uasset'";
-	auto AmmoPickupSoundAsset = ConstructorHelpers::FObjectFinder<USoundBase>(SoundPath);
-	if (AmmoPickupSoundAsset.Object != nullptr)
-	{
-		ArrowHit = AmmoPickupSoundAsset.Object;
-	}
+//	TCHAR* SoundPath = L"Content'/LEJEU/Asset/Sound/Arrow/Hit/arrow-sound-effect.uasset'";
+//	auto AmmoPickupSoundAsset = ConstructorHelpers::FObjectFinder<USoundBase>(SoundPath);
+//	if (AmmoPickupSoundAsset.Object != nullptr)
+//	{
+//		ArrowHit = AmmoPickupSoundAsset.Object;
+//	}
 	
  
 

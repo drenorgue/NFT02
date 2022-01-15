@@ -25,6 +25,7 @@ class ANFTCharacter : public ACharacter
 		class USphereComponent* Sphere;
 
 public:
+
 	ANFTCharacter();
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -36,6 +37,8 @@ public:
 		float BaseLookUpRate;
 
 protected:
+
+	void OnBeginPlay();
 
 	void OnClick();
 
@@ -83,4 +86,15 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		class UCameraComponent* Cam02;
+
+	UPROPERTY(EditAnywhere)
+		AActor* MyActor;
+
+	UFUNCTION()
+		void FirtsPerson();
+	UFUNCTION()
+		void ThirdPerson();
+
+
+
 };

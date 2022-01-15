@@ -58,6 +58,11 @@ ANFTCharacter::ANFTCharacter()
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProjectile"));
 	Sphere->SetupAttachment(FollowCamera);
 
+
+
+
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -70,7 +75,8 @@ void ANFTCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ANFTCharacter::OnClick); // apelle la fonction de tire
-
+	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ANFTCharacter::ThirdPerson);
+	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ANFTCharacter::FirtsPerson);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ANFTCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ANFTCharacter::MoveRight);
 
@@ -107,6 +113,30 @@ void ANFTCharacter::Rotation(FRotator NewRotation)
 	SetActorRotation(NewRotation);
 }
 
+void ANFTCharacter::FirtsPerson()
+{
+	Cam02->SetActive(false);
+	FollowCamera->SetActive(true);
+}
+
+
+void ANFTCharacter::ThirdPerson()
+{
+	Cam02->SetActive(true);
+	FollowCamera->SetActive(false);
+}
+
+
+void ANFTCharacter::OnBeginPlay()
+{
+	
+	Super::BeginPlay();
+	APlayerController* OurPlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	FViewTargetTransitionParams Params;
+//	OurPlayerController->SetViewTarget(Cam02);
+
+	ThirdPerson();
+}
 
 void ANFTCharacter::OnClick()
 {
