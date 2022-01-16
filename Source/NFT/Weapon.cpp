@@ -139,7 +139,7 @@ void AWeapon::Fire02(FRotator ab)
 		FRotator b;
 		b = EyeRotation;
 		b.Add(1.0f, 5.0f, 0.0f); // éssaye de patch les balles
-		ab.Add (0.0f, 0.0f, 0.0f);
+		ab.Add(0.0f, 0.0f, 0.0f);
 		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, ab, e); // fait spawn la balle
 
 		for (TObjectIterator<ANFTCharacter> Itr; Itr; ++Itr)

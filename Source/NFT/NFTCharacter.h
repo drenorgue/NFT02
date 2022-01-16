@@ -38,6 +38,8 @@ public:
 
 protected:
 
+	void OnTick(float DeltaTime);
+
 	void OnBeginPlay();
 
 	void OnClick();
