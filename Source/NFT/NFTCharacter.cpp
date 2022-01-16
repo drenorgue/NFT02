@@ -129,7 +129,7 @@ void ANFTCharacter::ThirdPerson() // met a la 1 ère personne
 
 
 
-void ANFTCharacter::OnTick(float DeltaTime) //        /!\ cette fonction ne fonctionne pas /!\
+void ANFTCharacter::OnTick(float DeltaTime) //        /!\ cette fonction ne fonctionne pas /!\ 
 {
 	Super::Tick(DeltaTime); 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Tick")); 
