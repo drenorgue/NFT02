@@ -40,6 +40,6 @@ public:
 		void DealDamage(float DamageValue);
 
 private:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		float health = 100.0f;
 };

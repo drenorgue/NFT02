@@ -89,10 +89,11 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UCameraComponent* Cam02;
 
+
 	UPROPERTY(EditAnywhere)
 		AActor* MyActor;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void FirtsPerson();
 	UFUNCTION()
 		void ThirdPerson();

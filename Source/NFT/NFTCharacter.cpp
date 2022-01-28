@@ -134,7 +134,6 @@ void ANFTCharacter::OnTick(float DeltaTime) //        /!\ cette fonction ne fonc
 	Super::Tick(DeltaTime); 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("Tick")); 
 
-
 }
 
 void ANFTCharacter::OnBeginPlay()
@@ -164,7 +163,7 @@ void ANFTCharacter::OnClick()
 
 	if (FirtsPersonBool == false) 
 	{
-		for (TObjectIterator<AWeapon> Itr; Itr; ++Itr) // apelle la fonction Fire() de Weapon.cpp
+		for (TObjectIterator<AWeapon> Itr; Itr; ++Itr) // apelle la fonction Fire02() de Weapon.cpp
 		{
 			if (Itr->IsA(AWeapon::StaticClass()))
 			{

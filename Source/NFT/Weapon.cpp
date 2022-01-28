@@ -8,6 +8,7 @@
 #include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/EngineTypes.h"
+#include "Camera/CameraActor.h"
 #include "Engine/GameEngine.h"
 #include "NFTCharacter.h"
 #include "Components/SceneComponent.h"
@@ -88,10 +89,6 @@ void AWeapon::Fire()
 			It->FirtsPersonBool;
 			
 		}
-
-
-
-
 	//	AActor* SpawnedActor = GetWorld()->SpawnActor<AProjectile>(a, EyeRotation);
 	//	SpawnedActor->SpawnCollisionHandlingMethod = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, b, e); // fait spawn la balle
@@ -117,13 +114,15 @@ void AWeapon::Fire02(FRotator ab)
 	AActor* MyOwner = GetOwner(); // récupère qui tire
 	if (MyOwner) // verifie qui tire (pour un eventuelle multijoueur)
 	{
+
+
 		FVector EyeLocation;
 		FRotator EyeRotation;
 		EyeLocation = RootComponent->GetComponentLocation();
 
 		//	EyeRotation.Add(0.0f, 0.0f, 100.0f); // met le personnage à l'envers
 
-
+		
 		FVector TraceEnd = EyeLocation + (ab.Vector() * 10000); // 10 000 car il fallait un grand nombre
 
 		FCollisionQueryParams QueryParms;
@@ -131,6 +130,17 @@ void AWeapon::Fire02(FRotator ab)
 		QueryParms.AddIgnoredActor(this); // ignore l'arme
 		QueryParms.bTraceComplex = true; // pour savoir exactement où on touche
 
+	/*	TArray<UCameraComponent*> CameraComps;
+		GetComponents(CameraComps);
+		for ( int i = 0; i < CameraComps.Num(); i++)
+		{
+			
+		}*/
+
+
+//		FRotator GetComponentRotation();
+
+		
 
 		FHitResult Hit;
 		FVector a = EyeLocation + (10.0f, 10.0f, 10.0f); // pour pas spawn dans le corp du Mesh
