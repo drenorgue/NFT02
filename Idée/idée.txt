@@ -1,0 +1,11 @@
+Et si le héros voulait en fait faire le mal et tuer les villageois ?
+Et en gros il a été ban de son village alors il va chercher je ne sais quoi pour réveiller un monstre car un autre méchant lui a dit de le faire bla bla et il réveille le démon mais comme îl est trop fort il le tue du coup il est pardonne il est heureux et a plein de gosses Fin
+Et il doit tuer des animaux en boss qui gardent des items pour aller à la zone suivante
+
+Zone 1: plaines,forêt,village,lac
+2:mer
+3:désert
+4:canyon
+5:montagne,grottes
+6:neige,Sibérie,goulag
+7?:on rajoute une zone où y a le boss
