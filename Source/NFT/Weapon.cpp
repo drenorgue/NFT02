@@ -130,36 +130,33 @@ void AWeapon::Fire02(FRotator ab)
 		QueryParms.AddIgnoredActor(this); // ignore l'arme
 		QueryParms.bTraceComplex = true; // pour savoir exactement où on touche
 
-	/*	TArray<UCameraComponent*> CameraComps;
-		GetComponents(CameraComps);
-		for ( int i = 0; i < CameraComps.Num(); i++)
-		{
-			
-		}*/
-
-
-//		FRotator GetComponentRotation();
-
-		
-
 		FHitResult Hit;
 		FVector a = EyeLocation + (10.0f, 10.0f, 10.0f); // pour pas spawn dans le corp du Mesh
 
 		FActorSpawnParameters e;
-		FRotator b;
-		b = EyeRotation;
-		b.Add(1.0f, 5.0f, 0.0f); // éssaye de patch les balles
-		ab.Add(0.0f, 0.0f, 0.0f);
-		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, a, ab, e); // fait spawn la balle
+		FRotator Lo;
+		FVector La;
+
+
+		GetActorEyesViewPoint(La, Lo);
+
+		FRotator Le = Lo;
+		Le.Yaw = 0.0f;
+	//	Le.Pitch = 0.0f;
+		Le.Roll = 0.0f;
+
 
 		for (TObjectIterator<ANFTCharacter> Itr; Itr; ++Itr)
 		{
 			if (Itr->IsA(ANFTCharacter::StaticClass()))
 			{
 				ANFTCharacter* actorClass = *Itr;
-				actorClass->Rotation(ab); // change la rotation du personnage a chaque tire
+				actorClass->Rotation(Le); // change la rotation du personnage a chaque tire
 			}
 		}
+
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, La, Lo, e); // fait spawn la balle
+
 
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, TEXT("HALLO"));
 	}

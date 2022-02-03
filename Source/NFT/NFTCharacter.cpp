@@ -52,6 +52,7 @@ ANFTCharacter::ANFTCharacter()
 	Cam02 = CreateDefaultSubobject<UCameraComponent>(TEXT("Cam02"));
 	Cam02->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	Cam02->bUsePawnControlRotation = true;
+	Cam02->SetupAttachment(RootComponent);
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
